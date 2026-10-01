@@ -1,0 +1,34 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+    "fanzone": {
+      "messages": {
+        ".read": "auth != null",
+        "$messageId": {
+          ".write": "auth != null && ((!data.exists() && newData.child('uid').val() == auth.uid && newData.child('name').isString() && newData.child('name').val().length <= 40 && newData.child('text').isString() && newData.child('text').val().length <= 500) || (data.exists() && root.child('admins').child(auth.uid).val() == true))"
+        }
+      }
+    },
+    "admins": {
+      "$uid": {
+        ".read": "auth != null && auth.uid == $uid",
+        ".write": false
+      }
+    },
+    "liveFeed": {
+      "items": {
+        ".read": true,
+        "$itemId": {
+          ".write": "auth != null && root.child('admins').child(auth.uid).val() == true"
+        }
+      }
+    },
+    "site": {
+      "announcement": {
+        ".read": true,
+        ".write": "auth != null && root.child('admins').child(auth.uid).val() == true"
+      }
+    }
+  }
+}

@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>STARVIBE Administrators</title><meta name="theme-color" content="#080b16">
+<style>
+body{margin:0;background:#070914;color:#f7f8ff;font:14px Inter,Arial,sans-serif}a{color:#ffd34d}.wrap{max-width:1100px;margin:auto;padding:25px}.box{background:#101728;border:1px solid #293650;border-radius:16px;padding:20px;margin:15px 0}.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}input,textarea,select,button{font:inherit}input,textarea,select{background:#080d19;color:#fff;border:1px solid #2b3654;border-radius:10px;padding:11px;box-sizing:border-box}input,select{min-height:42px}button{background:#ffd34d;border:0;border-radius:10px;padding:11px 15px;font-weight:900;cursor:pointer}.danger{background:#ff4d67;color:#fff}.secondary{background:#293650;color:#fff}.muted{color:#9da6bc;font-size:12px}.msg{padding:12px;border-bottom:1px solid #27304a}.msg b{color:#ffd34d}.msg p{margin:5px 0;line-height:1.45;white-space:pre-wrap}.hidden{display:none}.top{display:flex;justify-content:space-between;align-items:center;gap:15px}.status{padding:10px;border-radius:10px;background:#201b09;color:#ffd34d}.ok{background:#092117;color:#29e38b}.error{background:#32121a;color:#ff9aaa}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.item{background:#0b1020;border:1px solid #26304a;border-radius:12px;padding:12px;margin:8px 0}.item h3{margin:0 0 6px}.item p{margin:5px 0;line-height:1.4}.small{font-size:12px}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}@media(max-width:700px){.grid{grid-template-columns:1fr}.top{align-items:flex-start;flex-direction:column}}
+</style></head><body><div class="wrap">
+<div class="top"><h1>STARVIBE Administrators</h1><a href="index.html">Back to site</a></div>
+<div id="status" class="status">Checking administrator access…</div>
+<div id="login" class="box hidden"><h2>Administrator sign-in</h2><p class="muted">Use the Firebase Email/Password account that has been added to the STARVIBE admin list.</p><div class="row"><input id="email" type="email" autocomplete="username" placeholder="Admin email"><input id="password" type="password" autocomplete="current-password" placeholder="Password"><button id="signin">SIGN IN</button></div></div>
+<div id="panel" class="hidden">
+<div class="grid">
+<section class="box"><div class="top"><h2>FanZone moderation</h2><button id="logout" class="secondary">Sign out</button></div><div id="messages">Loading…</div></section>
+<section class="box"><h2>Site announcement</h2><textarea id="announcement" rows="5" style="width:100%;margin-bottom:10px" placeholder="Announcement shown on the public site…"></textarea><div class="actions"><button id="saveAnnouncement">SAVE ANNOUNCEMENT</button><button id="clearAnnouncement" class="secondary">CLEAR</button></div><p id="announcementStatus" class="muted"></p></section>
+</div>
+<section class="box"><h2>Live feed manager</h2><p class="muted">Publish source-linked items to <code>/liveFeed/items</code>. These appear on the public site before the static <code>feed.json</code> fallback.</p>
+<div class="grid"><input id="feedTitle" placeholder="Story title"><input id="feedSource" placeholder="Source name"><input id="feedLink" type="url" placeholder="https://example.com/story"><input id="feedDate" type="datetime-local"><select id="feedDepp"><option value="false">Entertainment</option><option value="true">Johnny Depp</option></select><input id="feedDescription" placeholder="Short description"></div>
+<div class="actions"><button id="publishFeed">PUBLISH STORY</button><button id="refreshFeed" class="secondary">REFRESH FEED</button></div><p id="feedStatus" class="muted"></p><div id="feedItems"></div></section>
+<section class="box"><h2>Admin setup</h2><p class="muted">Authorize an account by creating <code>/admins/USER_UID = true</code> in Firebase Realtime Database. Enable Email/Password and Anonymous sign-in in Firebase Authentication.</p></section>
+</div></div>
+<script src="firebase-config.js"></script><script src="https://www.gstatic.com/firebasejs/12.19.0/firebase-app-compat.js"></script><script src="https://www.gstatic.com/firebasejs/12.19.0/firebase-auth-compat.js"></script><script src="https://www.gstatic.com/firebasejs/12.19.0/firebase-database-compat.js"></script>
+<script>
+'use strict';
+const C=window.FIREBASE_CONFIG;
+if(!C) throw new Error('Firebase configuration is missing.');
+const app=firebase.apps.length?firebase.app():firebase.initializeApp(C),auth=firebase.auth(),db=firebase.database();
+const $=id=>document.getElementById(id);
+const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+const safeUrl=u=>{try{const x=new URL(String(u||''),location.href);return ['http:','https:'].includes(x.protocol)?x.href:'#'}catch{return '#'}};
+let messagesRef=null, feedRef=null, authCheckInProgress=false;
+function setStatus(message,type=''){const el=$('status');el.textContent=message;el.className='status '+type}
+function setButton(id,busy,label){const b=$(id);b.disabled=busy;b.textContent=busy?'WORKING…':label}
+function resetLogin(){ $('login').classList.remove('hidden');$('panel').classList.add('hidden'); }
+async function check(user){
+ if(authCheckInProgress)return; authCheckInProgress=true;
+ try{
+  if(!user){resetLogin();setStatus('Please sign in.');return;}
+  setStatus('Checking administrator permissions…');
+  const snap=await db.ref('admins/'+user.uid).once('value');
+  if(snap.val()===true){$('panel').classList.remove('hidden');$('login').classList.add('hidden');setStatus('Administrator access granted.','ok');loadMessages();loadAnnouncement();loadFeed();}
+  else{ $('panel').classList.add('hidden');$('login').classList.add('hidden');setStatus('This account is not authorized as an administrator.','error'); }
+ }catch(e){console.error(e);resetLogin();setStatus('Could not verify administrator access. Check Firebase Database rules and connection.','error');}
+ finally{authCheckInProgress=false;}
+}
+auth.onAuthStateChanged(check);
+$('signin').onclick=async()=>{const email=$('email').value.trim(),password=$('password').value;if(!email||!password){setStatus('Enter your administrator email and password.','error');return}setButton('signin',true,'SIGN IN');try{await auth.signInWithEmailAndPassword(email,password);$('password').value=''}catch(e){console.error(e);setStatus(e.code==='auth/invalid-credential'?'Invalid email or password.':(e.message||'Sign-in failed.'),'error')}finally{setButton('signin',false,'SIGN IN')}};
+$('password').addEventListener('keydown',e=>{if(e.key==='Enter')$('signin').click()});
+$('logout').onclick=()=>auth.signOut();
+function loadMessages(){if(messagesRef)messagesRef.off();messagesRef=db.ref('fanzone/messages').limitToLast(150);messagesRef.on('value',s=>{let out='';s.forEach(c=>{const m=c.val()||{};out+=`<div class="msg"><b>${esc(m.name||'Fan')}</b> <span class="muted">${m.createdAt?new Date(m.createdAt).toLocaleString():''}</span><p>${esc(m.text||'')}</p><button class="danger" data-delete-msg="${esc(c.key)}">DELETE</button></div>`});$('messages').innerHTML=out||'<p class="muted">No messages.</p>'},e=>{$('messages').innerHTML='<p class="muted">Could not load messages. Check Database rules.</p>';console.error(e)})}
+$('messages').onclick=async e=>{const btn=e.target.closest('[data-delete-msg]');if(!btn)return;if(!confirm('Delete this message?'))return;try{await db.ref('fanzone/messages/'+btn.dataset.deleteMsg).remove()}catch(err){alert('Delete failed: '+err.message)}};
+async function loadAnnouncement(){try{const s=await db.ref('site/announcement').once('value');$('announcement').value=(s.val()||{}).text||'';$('announcementStatus').textContent=s.exists()?'Current announcement loaded.':'No announcement is currently published.'}catch(e){$('announcementStatus').textContent='Could not load announcement.';console.error(e)}}
+$('saveAnnouncement').onclick=async()=>{const t=$('announcement').value.trim();if(!t)return $('announcementStatus').textContent='Enter an announcement first.';const user=auth.currentUser;if(!user)return;$('saveAnnouncement').disabled=true;try{await db.ref('site/announcement').set({text:t,createdAt:firebase.database.ServerValue.TIMESTAMP,uid:user.uid});$('announcementStatus').textContent='Announcement published.'}catch(e){$('announcementStatus').textContent='Save failed: '+e.message}finally{$('saveAnnouncement').disabled=false}};
+$('clearAnnouncement').onclick=async()=>{if(!confirm('Clear the public announcement?'))return;try{await db.ref('site/announcement').remove();$('announcement').value='';$('announcementStatus').textContent='Announcement cleared.'}catch(e){$('announcementStatus').textContent='Clear failed: '+e.message}};
+function renderFeedAdmin(items){$('feedItems').innerHTML=items.map(x=>`<div class="item"><h3>${esc(x.title||'Untitled')}</h3><div class="small">${esc(x.source||'Unknown')} • ${x.depp?'Johnny Depp':'Entertainment'} • ${x.pubDate?new Date(x.pubDate).toLocaleString():''}</div><p>${esc(x.description||'')}</p><a href="${esc(safeUrl(x.link))}" target="_blank" rel="noopener noreferrer">Open source</a><div class="actions"><button class="danger" data-delete-feed="${esc(x.id)}">DELETE</button></div></div>`).join('')||'<p class="muted">No Firebase feed stories yet.</p>'}
+async function loadFeed(){if(feedRef)feedRef.off();feedRef=db.ref('liveFeed/items').limitToLast(100);feedRef.on('value',s=>{const items=[];s.forEach(c=>items.push({id:c.key,...(c.val()||{})}));items.sort((a,b)=>new Date(b.pubDate||0)-new Date(a.pubDate||0));renderFeedAdmin(items);$('feedStatus').textContent=items.length+' Firebase stories.'},e=>{$('feedStatus').textContent='Could not load Firebase feed. Check Database rules.';console.error(e)})}
+$('refreshFeed').onclick=loadFeed;
+$('publishFeed').onclick=async()=>{const title=$('feedTitle').value.trim(),source=$('feedSource').value.trim(),link=safeUrl($('feedLink').value.trim()),description=$('feedDescription').value.trim(),rawDate=$('feedDate').value; if(!title||!source||link==='#'){return $('feedStatus').textContent='Title, source and a valid http(s) source link are required.'} const pubDate=rawDate?new Date(rawDate).toISOString():new Date().toISOString();setButton('publishFeed',true,'PUBLISH STORY');try{await db.ref('liveFeed/items').push({title,source,link,description,pubDate,depp:$('feedDepp').value==='true',createdAt:firebase.database.ServerValue.TIMESTAMP,uid:auth.currentUser.uid});['feedTitle','feedSource','feedLink','feedDescription','feedDate'].forEach(id=>$(id).value='');$('feedDepp').value='false';$('feedStatus').textContent='Story published.'}catch(e){$('feedStatus').textContent='Publish failed: '+e.message}finally{setButton('publishFeed',false,'PUBLISH STORY')}};
+$('feedItems').onclick=async e=>{const btn=e.target.closest('[data-delete-feed]');if(!btn)return;if(!confirm('Delete this feed story?'))return;try{await db.ref('liveFeed/items/'+btn.dataset.deleteFeed).remove()}catch(err){alert('Delete failed: '+err.message)}};
+</script></body></html>

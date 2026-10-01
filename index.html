@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>STARVIBE — Live Celebrity News & FanZone</title>
+<meta name="description" content="STARVIBE is a live entertainment feed with a 60% Johnny Depp focus, real-source links, events, and a fan community.">
+<meta name="theme-color" content="#080b16">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#070914;--panel:#0d1322;--panel2:#11192b;--line:#28324a;--text:#f7f8ff;--muted:#9da6bc;--gold:#ffd34d;--pink:#ef2dd1;--red:#ff355e;--green:#29e38b;--max:1420px}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:#f4f6fb;color:#151a28;font-family:Inter,Arial,sans-serif}a{text-decoration:none;color:inherit}button,input{font:inherit}
+.top{background:#050711;color:#fff;border-bottom:1px solid #20283b}.topin{max-width:var(--max);margin:auto;padding:8px 18px;display:flex;gap:15px;align-items:center;font-size:12px}.ticker{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.ticker b{color:var(--gold)}.toplinks{margin-left:auto;display:flex;gap:15px;color:#c8cede}
+header{background:linear-gradient(120deg,#050711,#11172a 55%,#090c18);color:#fff}.headin{max-width:var(--max);margin:auto;padding:22px 18px;display:flex;align-items:center;gap:28px}.brand{display:flex;align-items:center;gap:13px;min-width:285px}.logo{width:58px;height:58px;border-radius:18px;display:grid;place-items:center;background:linear-gradient(135deg,#ffd34d,#ff8a00);color:#080914;font-size:31px;font-weight:900;box-shadow:0 0 28px #ffd34d40;transform:rotate(-5deg)}.brandName{font-family:'Playfair Display',serif;font-size:36px;font-weight:800}.brandName span{color:var(--gold)}.tag{font-size:10px;letter-spacing:2px;color:#b9c1d6}.headsearch{flex:1;display:flex;justify-content:flex-end}.search{width:min(520px,100%);display:flex;background:#090d19;border:1px solid #29314a;border-radius:14px;overflow:hidden}.search input{flex:1;border:0;background:transparent;color:#fff;padding:13px 15px;outline:0}.search button{border:0;background:var(--gold);font-weight:900;padding:0 17px;cursor:pointer}
+nav{position:sticky;top:0;z-index:50;background:#090d18;border-top:1px solid #252c40;border-bottom:1px solid #252c40;box-shadow:0 5px 18px #0003}.navin{max-width:var(--max);margin:auto;display:flex;overflow:auto;white-space:nowrap}.navin a{padding:16px 15px;color:#e9ecf5;font-size:13px;font-weight:800}.navin a:hover,.navin .active{background:#151c30;color:var(--gold)}.navin .fan{color:#ff61e9;background:#25103c}
+.wrap{max-width:var(--max);margin:auto;padding:22px 18px}.grid{display:grid;grid-template-columns:260px minmax(0,1fr) 310px;gap:18px;align-items:start}
+.card,.darkcard{border-radius:16px;overflow:hidden}.card{background:#fff;border:1px solid #e1e5ee;box-shadow:0 7px 25px #19213710}.darkcard{background:linear-gradient(145deg,#0a0e19,#121a2b);color:#fff;border:1px solid #242d45}.ctitle{display:flex;justify-content:space-between;align-items:center;padding:14px 15px;border-bottom:1px solid #26304a;font-weight:900}.ctitle small{color:#aab3c8;font-weight:700}.liveDot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--red);box-shadow:0 0 10px var(--red);margin-right:7px}.feeditem{padding:13px 14px;border-bottom:1px solid #222a3e}.feeditem:last-child{border:0}.feeditem strong{font-size:12px;line-height:1.45}.feeditem time{display:block;color:#8993aa;font-size:10px;margin-top:5px}.feeditem .source{color:#6fd8ff}.feeditem a:hover{color:var(--gold)}
+.hero{min-height:410px;border-radius:18px;overflow:hidden;position:relative;background:radial-gradient(circle at 75% 30%,#7c135e,#18102d 38%,#080b16 75%);color:#fff;border:1px solid #252d44}.hero:after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,#03050cf5,#03050c80,#03050c10)}.heroContent{position:relative;z-index:2;max-width:72%;padding:52px 38px}.pill{display:inline-block;border-radius:999px;padding:7px 11px;font-size:10px;font-weight:900;background:var(--pink);color:#fff}.hero h1{font-size:clamp(30px,4vw,54px);line-height:1.02;margin:16px 0}.hero p{color:#d6d9e4;line-height:1.65}.btn{display:inline-block;padding:12px 17px;border-radius:11px;background:var(--gold);color:#080914;font-weight:900;margin-top:10px}.heroBadge{position:absolute;right:25px;bottom:25px;z-index:3;border:1px solid #fff4;background:#0008;padding:10px 13px;border-radius:12px;font-size:11px}
+.livePanel{margin-top:14px}.liveGrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.liveCard{padding:15px;background:#0b1020;color:#fff;border:1px solid #27314a;border-radius:14px}.liveCard.jd{border-color:#8d5d0a;background:linear-gradient(145deg,#121522,#1e180b)}.liveCard .badge{font-size:9px;text-transform:uppercase;font-weight:900;color:var(--gold)}.liveCard h3{font-size:15px;line-height:1.35;margin:7px 0}.liveCard p{font-size:11px;color:#aeb7ca;line-height:1.5;margin:0 0 9px}.liveCard .meta{font-size:10px;color:#7f8aa2}.liveCard .read{display:inline-block;margin-top:10px;color:#8ddcff;font-size:11px;font-weight:900}
+.sectionHead{display:flex;justify-content:space-between;align-items:end;margin:28px 0 12px}.sectionHead h2{margin:0;font-size:21px}.sectionHead a{font-size:12px;color:#7654ff;font-weight:800}.posts{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.post .thumb{height:135px;background:linear-gradient(135deg,#272e44,#c12c7c);position:relative}.post .thumb:before{content:'STARVIBE';position:absolute;inset:0;display:grid;place-items:center;color:#fff8;font-weight:900;letter-spacing:2px}.postbody{padding:13px}.post h3{font-size:14px;line-height:1.4;margin:8px 0}.meta{font-size:10px;color:#8b94a8}
+.ad{min-height:170px;background:linear-gradient(135deg,#18072b,#420e57 60%,#11162a);color:#fff;display:grid;place-items:center;text-align:center;padding:20px;border-radius:16px;border:1px solid #652476}.ad strong{display:block;color:var(--gold);font-size:24px}.ad span{display:block;color:#d3bfe0;margin:8px 0 15px;font-size:12px}
+.social a{display:flex;justify-content:space-between;align-items:center;padding:12px 13px;border-bottom:1px solid #252d44;font-size:12px}.social a:last-child{border:0}.social em{font-style:normal;color:#9ba5bc}.social a:hover{background:#151c30}
+.fanbox{padding:18px;background:linear-gradient(145deg,#1b0d2b,#351044);color:#fff;border:1px solid #6e2b8d;border-radius:16px}.fanbox h3{margin:0 0 8px}.fanbox p{font-size:12px;color:#d9cde4;line-height:1.55}.fanbtn{display:block;text-align:center;background:linear-gradient(90deg,#8c22ff,#ed2dca);padding:13px;border-radius:11px;font-weight:900;cursor:pointer;border:0;color:#fff;width:100%}.admin{display:block;margin-top:10px;text-align:center;font-size:11px;color:#c9a9dc}.event{display:grid;grid-template-columns:55px 1fr;gap:10px;padding:11px 13px;border-bottom:1px solid #222a3e}.event strong{font-size:11px;line-height:1.4}.event small{display:block;color:#8993aa;margin-top:4px}
+.categoryGrid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}.cat{height:105px;border-radius:14px;padding:15px;display:flex;flex-direction:column;justify-content:end;color:#fff;background:linear-gradient(135deg,#10172b,#81256f);font-weight:900}.cat:nth-child(2){background:linear-gradient(135deg,#0b2740,#008ca5)}.cat:nth-child(3){background:linear-gradient(135deg,#26162f,#a2394c)}.cat:nth-child(4){background:linear-gradient(135deg,#17240f,#6e7d21)}.cat:nth-child(5){background:linear-gradient(135deg,#281b10,#c47a20)}
+footer{margin-top:35px;background:#070914;color:#fff}.footin{max-width:var(--max);margin:auto;padding:35px 18px;display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:30px}footer h3{margin-top:0;color:var(--gold)}footer p,footer a{font-size:12px;color:#aeb6ca;line-height:1.7}.copy{border-top:1px solid #20273a;padding:16px 18px;text-align:center;color:#788298;font-size:11px}
+.status{position:fixed;right:16px;bottom:16px;z-index:100;background:#0b1020;color:#fff;border:1px solid #2b3654;padding:10px 13px;border-radius:12px;font-size:11px;box-shadow:0 10px 30px #0004}.status.ok{border-color:var(--green)}.status.warn{border-color:var(--gold)}
+.modal{position:fixed;inset:0;background:#02040bcc;display:none;place-items:center;z-index:200;padding:15px}.modal.open{display:grid}.modalBox{width:min(700px,100%);max-height:90vh;overflow:auto;background:#0c1220;color:#fff;border:1px solid #2c3854;border-radius:18px;padding:18px}.modalHead{display:flex;justify-content:space-between;align-items:center}.close{background:none;border:0;color:#fff;font-size:26px;cursor:pointer}.chat{height:360px;overflow:auto;background:#080d19;border:1px solid #26304a;border-radius:12px;padding:10px;margin:12px 0}.msg{padding:9px 10px;border-bottom:1px solid #1c2538}.msg b{color:var(--gold);font-size:11px}.msg time{color:#6f7a91;font-size:9px;margin-left:8px}.msg p{margin:4px 0 0;font-size:12px;line-height:1.45;color:#e4e7ef}.chatForm{display:flex;gap:8px}.chatForm input{flex:1;background:#080d19;color:#fff;border:1px solid #2b3654;border-radius:10px;padding:11px}.chatForm button{background:var(--gold);border:0;border-radius:10px;padding:0 16px;font-weight:900}.small{font-size:10px;color:#8792aa}
+@media(max-width:1100px){.grid{grid-template-columns:210px minmax(0,1fr)}.grid>.right{grid-column:1/-1;display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.posts{grid-template-columns:repeat(2,1fr)}.categoryGrid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:720px){.headin{padding:15px}.brand{min-width:0}.brandName{font-size:27px}.logo{width:45px;height:45px;font-size:23px}.tag,.headsearch{display:none}.grid{display:block}.left,.right{margin-top:15px}.hero{min-height:430px}.heroContent{max-width:100%;padding:35px 24px}.liveGrid{grid-template-columns:1fr}.posts{grid-template-columns:1fr}.categoryGrid{grid-template-columns:1fr 1fr}.grid>.right{display:block}.footin{grid-template-columns:1fr 1fr}.toplinks{display:none}.navin a{padding:14px 12px}}
+</style>
+</head>
+<body>
+<div class="top"><div class="topin"><div class="ticker"><b>● LIVE:</b> STARVIBE is refreshing real entertainment sources automatically.</div><div class="toplinks"><a href="#official">Official</a><a href="#contact">Contact</a></div></div></div>
+<header><div class="headin"><a class="brand" href="#home"><div class="logo">★</div><div><div class="brandName">STAR<span>VIBE</span></div><div class="tag">CELEBRITY NEWS • LIVE FEEDS • EVENTS • FANZONE</div></div></a><div class="headsearch"><form class="search" id="searchForm"><input id="searchInput" placeholder="Search live stories..." type="search"><button>SEARCH</button></form></div></div></header>
+<nav><div class="navin"><a class="active" href="#home">Home</a><a href="#live">Live Feed</a><a href="#johnny">Johnny Depp</a><a href="#events">Events</a><a href="#official">Official Social</a><a class="fan" href="#" id="openChatTop">FanZone Chat</a><a href="admin.html">Administrators</a></div></nav>
+
+<div class="wrap" id="home"><div class="grid">
+<aside class="left">
+  <div class="darkcard" id="live"><div class="ctitle"><span><span class="liveDot"></span>LIVE FEED</span><small id="feedStatus">Loading…</small></div><div id="sideFeed"></div></div>
+  <div class="darkcard" style="margin-top:15px" id="events"><div class="ctitle"><span>EVENT LOGS</span><small>From live sources</small></div><div id="eventList"><div class="event"><div>🎬</div><div><strong>Events are pulled from entertainment coverage.</strong><small>Refreshes with the feed</small></div></div></div></div>
+</aside>
+
+<main>
+<section class="hero" id="johnny"><div class="heroContent"><span class="pill">JOHNNY DEPP FOCUS • 60%</span><h1>Live celebrity coverage with a dedicated Johnny Depp feed.</h1><p>STARVIBE combines live entertainment sources with a 60% Johnny Depp focus, direct source links, a fan community and official social links.</p><a class="btn" href="#live">See Live Feed ↓</a></div><div class="heroBadge">LIVE • SOURCE-LINKED</div></section>
+
+<div class="sectionHead"><h2>🔴 Live Entertainment Feed</h2><span class="small" id="lastUpdated">Waiting for refresh…</span></div>
+<div class="liveGrid" id="liveGrid"></div>
+
+<div class="sectionHead"><h2>Latest Stories</h2><a href="#live">View live feed →</a></div>
+<div class="posts" id="postGrid"></div>
+
+<div class="sectionHead"><h2>Explore STARVIBE</h2></div>
+<div class="categoryGrid"><a class="cat" href="#live">Live Feed</a><a class="cat" href="#johnny">Johnny Depp</a><a class="cat" href="#events">Events</a><a class="cat" href="#official">Official Social</a><a class="cat" href="#fanzone">FanZone</a></div>
+</main>
+
+<aside class="right">
+  <div class="ad"><div><strong>YOUR AD HERE</strong><span>Reach celebrity fans and entertainment audiences.</span><a class="btn" href="mailto:starvibebusiness@gmail.com">Advertise With Us →</a></div></div>
+
+  <div class="darkcard" id="official" style="margin-top:15px"><div class="ctitle">📱 JOHNNY DEPP OFFICIAL SOCIAL</div><div class="social">
+    <a href="https://www.instagram.com/johnnydepp/" target="_blank" rel="noopener noreferrer nofollow"><b>◎ Instagram @johnnydepp</b><em>Open →</em></a>
+    <a href="https://www.facebook.com/johnnydepp/" target="_blank" rel="noopener noreferrer nofollow"><b>f Facebook @johnnydepp</b><em>Open →</em></a>
+    <a href="https://www.tiktok.com/@johnnydepp" target="_blank" rel="noopener noreferrer nofollow"><b>♫ TikTok @johnnydepp</b><em>Open →</em></a>
+    <a href="https://www.johnnydeppofficial.com/" target="_blank" rel="noopener noreferrer"><b>★ Official Website</b><em>Open →</em></a>
+    <a href="https://linktr.ee/johnnydepp" target="_blank" rel="noopener noreferrer nofollow"><b>✓ Verified Social Hub</b><em>Open →</em></a>
+  </div></div>
+
+  <div class="fanbox" style="margin-top:15px" id="fanzone"><h3>FanZone Chat</h3><p>Join the STARVIBE community, react to live stories and talk with other fans.</p><button class="fanbtn" id="openChat">JOIN FANZONE CHAT →</button><a class="admin" href="admin.html">🔐 Administrator Area</a></div>
+
+  <div class="darkcard" style="margin-top:15px"><div class="ctitle">🛡️ï¸ SAFETY</div><div class="feeditem"><strong>Official-account reminder</strong><time>Only use verified links on this page. STARVIBE will never ask fans for money to meet a celebrity.</time></div></div>
+</aside>
+</div></div>
+
+<section id="privacy" style="padding:30px 20px"><div class="wrap"><h2>Privacy</h2><p>STARVIBE uses Firebase for authentication, chat, and administrator data. Do not post sensitive personal information in FanZone.</p></div></section><section id="terms" style="padding:30px 20px"><div class="wrap"><h2>Terms</h2><p>Use STARVIBE respectfully and do not submit unlawful, abusive, or private information. Source links belong to their respective publishers.</p></div></section>
+<footer id="contact"><div class="footin"><div><div class="brandName">STAR<span>VIBE</span></div><p>Live entertainment coverage, source links and a fan community. STARVIBE is an independent fan/entertainment platform and is not affiliated with Johnny Depp or his representatives.</p></div><div><h3>Explore</h3><a href="#home">Home</a><br><a href="#live">Live Feed</a><br><a href="#johnny">Johnny Depp</a><br><a href="#events">Events</a></div><div><h3>Community</h3><a href="#fanzone">FanZone Chat</a><br><a href="admin.html">Administrator</a><br><a href="#official">Official Social</a></div><div><h3>Business</h3><a href="mailto:starvibebusiness@gmail.com">Contact</a><br><a href="#privacy">Privacy</a><br><a href="#terms">Terms</a></div></div><div class="copy">© <span id="year"></span> STARVIBE • Independent entertainment platform.</div></footer>
+
+<div class="status warn" id="status">Live feed: connecting…</div>
+
+<div class="modal" id="chatModal" role="dialog" aria-modal="true" aria-label="FanZone Chat"><div class="modalBox">
+  <div class="modalHead"><div><h2 style="margin:0">FanZone Chat</h2><div class="small">Live community chat powered by Firebase.</div></div><button class="close" id="closeChat">×</button></div>
+  <div id="chat" class="chat"><div class="small">Connecting to FanZone…</div></div>
+  <form class="chatForm" id="chatForm"><input id="chatName" maxlength="40" placeholder="Your display name" required><input id="chatText" maxlength="500" placeholder="Write a message…" required><button>SEND</button></form>
+  <div class="small" style="margin-top:8px">Be respectful. Messages may be moderated by STARVIBE administrators.</div>
+</div></div>
+
+<script src="firebase-config.js"></script>
+<script src="https://www.gstatic.com/firebasejs/12.19.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/12.19.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/12.19.0/firebase-database-compat.js"></script>
+<script>
+'use strict';
+const FIREBASE_CONFIG=window.FIREBASE_CONFIG;
+if(!FIREBASE_CONFIG) throw new Error('Firebase configuration is missing.');
+const app=firebase.apps.length?firebase.app():firebase.initializeApp(FIREBASE_CONFIG);
+const auth=firebase.auth(), db=firebase.database();
+let currentUser=null, chatRef=null, chatStarted=false, feedTimer=null;
+const $=id=>document.getElementById(id);
+const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+const safeUrl=u=>{try{const x=new URL(String(u||''),location.href);return ['http:','https:'].includes(x.protocol)?x.href:'#'}catch{return '#'}};
+function dateValue(v){const d=new Date(v);return Number.isNaN(d.getTime())?null:d}
+function ago(v){const d=dateValue(v);if(!d)return 'Unknown time';const sec=Math.max(1,(Date.now()-d.getTime())/1000);if(sec<60)return Math.floor(sec)+'s ago';if(sec<3600)return Math.floor(sec/60)+'m ago';if(sec<86400)return Math.floor(sec/3600)+'h ago';return Math.floor(sec/86400)+'d ago'}
+function normalizeItems(items){return items.map(x=>({...x,link:safeUrl(x.link),title:String(x.title||'Untitled'),source:String(x.source||'Unknown source'),description:String(x.description||''),pubDate:x.pubDate||new Date().toISOString()})).filter(x=>x.link!=='#').sort((a,b)=>(dateValue(b.pubDate)?.getTime()||0)-(dateValue(a.pubDate)?.getTime()||0))}
+function renderFeed(items){
+ const safe=normalizeItems(items);
+ $('sideFeed').innerHTML=safe.slice(0,6).map(x=>`<div class="feeditem"><a href="${esc(x.link)}" target="_blank" rel="noopener noreferrer"><strong>${esc(x.title)}</strong><time><span class="source">${esc(x.source)}</span> • ${ago(x.pubDate)}</time></a></div>`).join('')||'<div class="feeditem"><strong>No stories returned yet.</strong><time>Try refreshing</time></div>';
+ $('liveGrid').innerHTML=safe.slice(0,12).map(x=>`<article class="liveCard ${x.depp?'jd':''}"><div class="badge">${x.depp?'★ JOHNNY DEPP':'ENTERTAINMENT'} • ${esc(x.source)}</div><h3>${esc(x.title)}</h3><p>${esc(x.description||'Live entertainment update. Click through for the original report.')}</p><div class="meta">${ago(x.pubDate)} • ${dateValue(x.pubDate)?.toLocaleString()||'Unknown time'}</div><a class="read" href="${esc(x.link)}" target="_blank" rel="noopener noreferrer">READ ORIGINAL →</a></article>`).join('')||'<div class="liveCard" style="grid-column:1/-1"><h3>Live feed is awaiting updates</h3><p>No verified stories are currently available.</p></div>';
+ $('postGrid').innerHTML=safe.slice(0,8).map(x=>`<article class="card post"><div class="thumb"></div><div class="postbody"><div class="label">${x.depp?'JOHNNY DEPP':'ENTERTAINMENT'}</div><h3><a href="${esc(x.link)}" target="_blank" rel="noopener noreferrer">${esc(x.title)}</a></h3><div class="meta">${esc(x.source)} • ${ago(x.pubDate)}</div></div></article>`).join('');
+ $('feedStatus').textContent=safe.length+' stories';$('lastUpdated').textContent='Updated '+new Date().toLocaleTimeString();
+}
+async function loadFeed(){
+ $('feedStatus').textContent='Refreshing…';$('status').textContent='Live feed: connecting…';$('status').className='status warn';
+ try{const snap=await db.ref('liveFeed/items').limitToLast(60).once('value');const items=[];snap.forEach(c=>items.push({id:c.key,...(c.val()||{})}));if(items.length){renderFeed(items.slice(-60));$('status').textContent='Live feed: Firebase connected';$('status').className='status ok';return}}catch(e){console.warn('Firebase feed unavailable.',e)}
+ try{const r=await fetch('feed.json',{cache:'no-store'});if(!r.ok)throw new Error('HTTP '+r.status);const payload=await r.json();const items=Array.isArray(payload.items)?payload.items:[];if(items.length){renderFeed(items);$('status').textContent='Live feed: static source connected';$('status').className='status ok';return}}catch(e){console.warn('Static feed unavailable.',e)}
+ renderFeed([]);$('feedStatus').textContent='Feed awaiting updates';$('lastUpdated').textContent='Add verified stories through the administrator area or feed.json';$('status').textContent='Live feed temporarily unavailable — retrying…';$('status').className='status warn';
+}
+async function loadAnnouncement(){try{const s=await db.ref('site/announcement').once('value');const v=s.val()||{};if(v.text){$('announcementBar').textContent=v.text;$('announcementBar').style.display='block'}}catch(e){console.warn('Announcement unavailable.',e)}}
+function renderChat(snap){const arr=[];snap.forEach(c=>arr.push({id:c.key,...(c.val()||{})}));$('chat').innerHTML=arr.map(m=>`<div class="msg"><b>${esc(m.name||'Fan')}</b><time>${m.createdAt?new Date(m.createdAt).toLocaleString():''}</time><p>${esc(m.text||'')}</p></div>`).join('')||'<div class="small">No messages yet — start the conversation.</div>';$('chat').scrollTop=$('chat').scrollHeight}
+async function initChat(){if(chatStarted&&chatRef)return;chatStarted=true;try{currentUser=auth.currentUser||await auth.signInAnonymously();chatRef=db.ref('fanzone/messages').limitToLast(80);chatRef.on('value',renderChat,e=>{$('chat').innerHTML='<div class="small">FanZone could not load messages. Check Firebase Database rules.</div>';console.error(e)})}catch(e){chatStarted=false;$('chat').innerHTML='<div class="small">FanZone is not connected yet. Enable Anonymous Authentication and check Database rules.</div>';console.error(e)}}
+function closeChat(){if(chatRef){chatRef.off();chatRef=null}chatStarted=false;$('chatModal').classList.remove('open')}
+$('openChat').onclick=$('openChatTop').onclick=e=>{e.preventDefault();$('chatModal').classList.add('open');initChat()};$('closeChat').onclick=closeChat;$('chatModal').onclick=e=>{if(e.target.id==='chatModal')closeChat()};
+$('chatForm').onsubmit=async e=>{e.preventDefault();const name=$('chatName').value.trim(),text=$('chatText').value.trim();if(!currentUser||!name||!text)return;const btn=e.submitter;btn.disabled=true;try{await db.ref('fanzone/messages').push({uid:currentUser.uid,name:name.slice(0,40),text:text.slice(0,500),createdAt:firebase.database.ServerValue.TIMESTAMP});$('chatText').value=''}catch(err){alert('Message could not be sent: '+err.message)}finally{btn.disabled=false}};
+$('searchForm').onsubmit=e=>{e.preventDefault();const q=$('searchInput').value.trim().toLowerCase();document.querySelectorAll('#liveGrid .liveCard').forEach(c=>c.style.display=!q||c.innerText.toLowerCase().includes(q)?'block':'none');$('live').scrollIntoView({behavior:'smooth'})};
+$('year').textContent=new Date().getFullYear();loadFeed();loadAnnouncement();feedTimer=setInterval(loadFeed,5*60*1000);window.addEventListener('beforeunload',()=>{if(feedTimer)clearInterval(feedTimer);if(chatRef)chatRef.off()});
+</script>
+</body></html>
